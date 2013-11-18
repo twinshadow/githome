@@ -1,0 +1,419 @@
+" Pathogen Auto-load
+filetype off
+silent! call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
+set history=255
+
+set autoread    "
+set nobackup    "
+set nowb        "
+set noswapfile  "
+
+let mapleader=";"
+let g:mapleader=";"
+
+set title  "# The Title
+
+try
+    lang en_US
+catch
+endtry
+
+set ffs=unix,dos,mac "Default file types
+set encoding=utf8
+
+set completeopt=menu,menuone,longest
+set pumheight=15
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * redraw!
+
+"###########################
+" Navigation, Tabs, Buffers
+"###########################
+
+" Remap left and right arrow keys for glorious buffer navigation
+map <left>  :bp<cr>
+map <right> :bn<cr>
+
+" Unmap the arrow keys, learn Vi
+nnoremap <up>    <nop>
+nnoremap <down>  <nop>
+inoremap <up>    <nop>
+inoremap <down>  <nop>
+inoremap <left>  <nop>
+inoremap <right> <nop>
+
+" scroll through long lines of wrapped text, like every other editor
+map j gj
+map k gk
+
+" Move through windows with VIM-style nav
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Escape from Insert mode
+inoremap jk <ESC>
+
+" Save fast, save often
+nmap <leader>w :w!<CR>
+
+" Save SUDO
+cmap w!! w !sudo tee % >/dev/null
+
+"######################
+" Interface and Search
+"#####################
+
+" Display the ruler
+set ruler
+" Disable line numbering
+set nonu
+
+" Toggle line-numbering
+nnoremap <leader>n <esc>:set number! number?<cr>
+
+" when scrolling up or down the page, how many lines from the top or bottom will VIM place the cursor.
+set scrolloff=3
+
+" Turn off the ability to scroll horozontally
+set sidescrolloff=0
+
+" In VIM 7, hit CTRL+N for wildmenu
+set wildmenu
+set wildmode=list:longest,full
+
+" Make the command-line 2 rows high
+set cmdheight=2
+
+" If a window is closed, the buffer is not closed
+set hidden
+
+" Allows backspace to return to previous lines
+set backspace=eol,start,indent
+
+" Allows movement keys to return to prev/next lines
+set whichwrap+=<,>,h,l
+
+" Use of "\v" means that in the pattern after it all ASCII characters except
+" '0'-'9', 'a'-'z', 'A'-'Z' and '_' have a special meaning.  "very magic"
+nnoremap / /\v
+vnoremap / /\v
+
+" Search only in the selected block (visual mode)
+vnoremap / <esc>/\%V
+
+" Ignore case when searching
+set ignorecase
+
+" Case-Sensitive when input uses both
+set smartcase
+
+" Global search and replace by default
+set gdefault
+
+" Highlight search things
+set hlsearch
+
+" Make search act like search in modern browsers
+set incsearch
+
+" Set magic on, for regular expressions
+set magic
+nmap <silent> <leader><space> :nohlsearch<CR>
+
+" Show matching bracets when text indicator is over them
+set showmatch
+" How many tenths of a second to blink
+set mat=2
+
+" No sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+
+" Runs the script through whatever is set as
+" :set makeprg
+map <F9> :make "%"<CR>
+
+"#############
+" Status-line
+"#############
+
+" Always hide the statusline
+set laststatus=2
+
+" Format the statusline
+set statusline=\ %f%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
+function! CurDir()
+    let curdir = substitute(getcwd(), $HOME, "~", "g")
+    return curdir
+endfunction
+
+" Set the CWD to be the files PWD
+map <leader>cd :cd %:p:h<cr>
+
+"#################################
+" Text formatting and indentation
+"#################################
+set list
+set listchars=tab:>.
+
+set expandtab
+set shiftwidth=8
+set tabstop=8
+set softtabstop=8
+set smarttab
+
+set linebreak
+set textwidth=0
+
+" Auto indent
+set noautoindent
+" Smart indent
+set smartindent
+" Copy indent
+set nocopyindent
+" Wrap lines
+set wrap
+
+map <leader>t2 :setlocal shiftwidth=2<cr>
+map <leader>t4 :setlocal shiftwidth=4<cr>
+map <leader>t8 :setlocal shiftwidth=8<cr>
+
+"#######################
+" Clang_Complete Plugin
+"#######################
+
+" Disable auto popup, use <Tab> to autocomplete
+let g:clang_complete_auto = 0
+" Show clang errors in the quickfix window
+let g:clang_complete_copen = 1
+
+"###############################################################################
+" Cscope
+"###############################################################################
+if has('cscope')
+  set cscopetag cscopeverbose
+
+  if has('quickfix')
+    set cscopequickfix=s0,c0,d0,i0,t0,e0
+  endif
+
+  cnoreabbrev csa cs add
+  cnoreabbrev csf cs find
+  cnoreabbrev csk cs kill
+  cnoreabbrev csr cs reset
+  cnoreabbrev css cs show
+  cnoreabbrev csh cs help
+
+  nmap <leader>ss :scs find s <C-R>=expand("<cword>")<CR><CR>
+	nmap <leader>sg :scs find g <C-R>=expand("<cword>")<CR><CR>
+	nmap <leader>sc :scs find c <C-R>=expand("<cword>")<CR><CR>
+	nmap <leader>st :scs find t <C-R>=expand("<cword>")<CR><CR>
+	nmap <leader>se :scs find e <C-R>=expand("<cword>")<CR><CR>
+	nmap <leader>sf :scs find f <C-R>=expand("<cfile>")<CR><CR>
+	nmap <leader>si :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+	nmap <leader>sd :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+  function! SudoCscope()
+    let cspath=input("Cscope path: ", expand("%:p:h", "dir"))
+    execute substitute("lcd %s", "%s", cspath, "")
+    :! cscope -bR
+    execute substitute('cs add cscope.out %s', '%s', cspath, '')
+    lcd -
+  endf
+  nmap <leader>sa :call SudoCscope()<CR>
+endif
+
+"##################
+" Extradite Plugin
+"##################
+nmap <leader>e :Extradite<CR>
+
+"#################
+" Fugitive Plugin
+"#################
+
+"##############
+" GNUpg Plugin
+"##############
+let g:GPGPreferArmor=1
+let g:GPGUsePipes=1
+
+"#############
+" Latex Suite
+"#############
+let g:tex_flavor='latex'
+
+"########################
+" MiniBufExplorer Plugin
+"########################
+nmap <leader>b :TMiniBufExplorer<CR>
+let g:miniBufExplVSplit = 20 " column width in chars
+let g:miniBufExplMaxSize = 60
+let g:miniBufExplMinSize = 10
+let g:miniBufExplSplitBelow = 3
+let g:miniBufExplorerMoreThanOne = 3
+
+"#################
+" NERDTree Plugin
+"#################
+nmap <leader>n :NERDTreeToggle<CR>
+
+"#################
+" Snipmate Plugin
+"#################
+let g:snips_author = 'Anthony Cornehl'
+
+"################
+" Sparkup Plugin
+"################
+
+"##################
+" Super Tab Plugin
+"##################
+let g:SuperTabDefaultCompletionType = "context"
+
+"#################
+" Surround Plugin
+"#################
+
+"################
+" Taglist Plugin
+"################
+nmap <leader>c :TlistToggle<CR>
+
+"#################
+" Tasklist Plugin
+"#################
+nmap <leader>l :TaskList<CR>
+
+"#################
+" Yankring Plugin
+"#################
+let g:yankring_history_dir=expand("$HOME/.vim")
+
+"#######################
+" Filetype Options
+"#######################
+filetype plugin indent on
+
+" Apache
+au BufNewFile,BufRead /etc/apache*/apache*.conf set filetype=apache
+au BufNewFile,BufRead /etc/apache*/httpd.conf set filetype=apache
+au BufNewFile,BufRead /etc/apache*/ports.conf set filetype=apache
+au BufNewFile,BufRead /etc/apache*/sites*/* set filetype=apache
+au BufNewFile,BufRead */apache.conf/* set filetype=apache
+
+" C
+"au FileType c setlocal foldmethod=syntax
+au FileType c setlocal noexpandtab
+au FileType c setlocal shiftwidth=8
+au FileType c setlocal tabstop=8
+au FileType c setlocal softtabstop=0
+au FileType c setlocal nolist
+
+" C++
+"au FileType cpp setlocal foldmethod=syntax
+au FileType cpp setlocal noexpandtab
+au FileType cpp setlocal shiftwidth=8
+au FileType cpp setlocal tabstop=8
+au FileType cpp setlocal softtabstop=0
+au FileType cpp setlocal nolist
+
+" HTML
+let b:closetag_html_style=1
+au Filetype html source ~/.vim/plugin/closetag.vim
+
+" Make
+au FileType make setlocal noexpandtab
+au FileType make setlocal shiftwidth=8
+au FileType make setlocal tabstop=8
+au FileType make setlocal softtabstop=0
+au FileType make setlocal nolist
+
+" Markdown
+au Filetype markdown set makeprg=Markdown.pl
+au Filetype markdown set listchars=tab:>.,eol:$
+au BufNewFile,BufRead *.md set filetype=markdown
+
+" Nginx
+au BufRead,BufNewFile */nginx/nginx.conf set filetype=nginx
+au BufRead,BufNewFile */nginx/conf.d/* set filetype=nginx
+au BufRead,BufNewFile */nginx/sites*/* set filetype=nginx
+au BufRead,BufNewFile */nginx/conf/* set filetype=nginx
+
+" Perl
+au FileType perl setlocal foldmethod=syntax
+au Filetype perl set makeprg=perl
+
+" Prolog
+au BufNewFile,BufRead *.prolog set filetype=prolog
+
+" Python
+au Filetype python set autoindent
+au Filetype python set tabstop=4
+au Filetype python set softtabstop=4
+au Filetype python set shiftwidth=4
+au Filetype python set foldmethod=indent
+au Filetype python set foldlevel=10
+au Filetype python set makeprg=python
+"  Pytest Execute the tests
+au Filetype python nmap <silent><Leader>tf <Esc>:Pytest file<CR>
+au Filetype python nmap <silent><Leader>tc <Esc>:Pytest class<CR>
+au Filetype python nmap <silent><Leader>tm <Esc>:Pytest method<CR>
+"  Pytest cycle through test errors
+au Filetype python nmap <silent><Leader>tn <Esc>:Pytest next<CR>
+au Filetype python nmap <silent><Leader>tp <Esc>:Pytest previous<CR>
+au Filetype python nmap <silent><Leader>te <Esc>:Pytest error<CR>
+
+" XML
+let b:closetag_html_style=0
+au Filetype xml,xsl source ~/.vim/plugin/closetag.vim
+
+"###############################
+" Custom Functions and Keybinds
+"###############################
+
+" Replace Curly-brace templates with TT2
+function! RemoveCBrace()
+  s/{{/[%/e
+  s/}}/%]/e
+  s/%}/%]/e
+  s/{%/[%/e
+endf
+
+function! Nomore()
+  :%s/--More--        //
+  :%s///
+endf
+
+function! CleanupTmux()
+  :%s/\v\n\~\~\~\S+\s+//
+  :%s/\v--More--\n\n\s+\n\n\s+//
+endf
+
+function! RemoveWhitespace()
+  autocmd! InsertLeave * redraw!
+  autocmd  InsertLeave * %s/\s\+\%#\@<!$//e
+endf
+
+"##################
+" Colors and Fonts
+"##################
+syntax on
+
+if has('gui_running')
+  set guioptions=aegim
+  set guifont=ProggyTinyTT\ 12
+  colorscheme desert256
+  set nowrap
+else
+  colorscheme wombat
+endif

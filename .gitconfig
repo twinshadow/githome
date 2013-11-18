@@ -1,0 +1,32 @@
+[alias]
+  b         = branch
+  co        = checkout
+  cb        = checkout -b
+  ci        = commit
+  cii       = commit --interactive
+  cp        = cherry-pick
+  edit      = ! sh -c '$EDITOR `git fshow $1`' -
+  fshow     = ! sh -c 'git show --pretty="format:" --name-only $1 | grep -v "^$" | uniq | sed -e "s#^#`git rev-parse --show-toplevel`/#"' -
+  stat      = status
+  svn-diff  = ! git-svn-diff
+  vim       = ! sh -c 'vim `git fshow $1`' -
+  vimdiff   = difftool -y -t vimdiff
+  vimmerge  = mergetool -y -t vimdiff
+  vim3      = mergetool -y -t splice
+  w         = whatchanged -p
+  wo        = whatchanged -p origin..
+[core]
+  editor = vim
+[color]
+  diff = auto
+  branch = auto
+  status = auto
+[diff]
+  mnemonicprefix = true
+[mergetool]
+  keepBackup = false
+[mergetool "splice"]
+  cmd = "gvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
+  trustExitCode = true
+[push]
+	default = matching

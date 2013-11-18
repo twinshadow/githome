@@ -1,0 +1,54 @@
+[submodule "clang_complete"]
+	path = clang_complete
+	url = https://github.com/Rip-Rip/clang_complete.git
+[submodule "extradite"]
+	path = extradite
+	url = https://github.com/int3/vim-extradite.git
+[submodule "fugitive"]
+	path = fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "mw-utils"]
+	path = mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule "nerdtree"]
+	path = nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "perl"]
+	path = perl
+	url = https://github.com/petdance/vim-perl.git
+[submodule "repeat"]
+	path = repeat
+	url = https://github.com/tpope/vim-repeat.git
+[submodule "snipmate"]
+	path = snipmate
+	url = https://github.com/twinshadow/snipmate.vim.git
+[submodule "supertab"]
+	path = supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule "surround"]
+	path = surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "taglist"]
+	path = taglist
+	url = https://github.com/vim-scripts/taglist.vim.git
+[submodule "tasklist"]
+	path = tasklist
+	url = https://github.com/superjudge/tasklist-pathogen.git
+[submodule "tlib"]
+	path = tlib
+	url = https://github.com/tomtom/tlib_vim.git
+[submodule "splice"]
+	path = splice
+	url = https://github.com/sjl/splice.vim.git
+[submodule "syntastic"]
+	path = syntastic
+	url = https://github.com/scrooloose/syntastic.git
+[submodule "tslime"]
+	path = tslime
+	url = https://github.com/jgdavey/tslime.vim.git
+[submodule "gnupg"]
+	path = gnupg
+	url = https://github.com/jamessan/vim-gnupg.git
+[submodule "tabular"]
+	path = tabular
+	url = https://github.com/godlygeek/tabular.git

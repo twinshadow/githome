@@ -1,0 +1,2 @@
+alias ddg="surfraw duckduckgo"
+

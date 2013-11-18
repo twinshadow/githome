@@ -1,0 +1,23 @@
+#!/bin/sh
+case "$(uname -s)" in
+  Linux)
+    LOADAVG="$(cat /proc/loadavg | cut -d' ' -f1)"
+    BATTERY="$(test -x /usr/bin/acpi && echo "$(acpi -b 2>/dev/null | cut -d',' -f2 | cut -d' ' -f2)")"
+    MEMORY="$(free -m | grep 'buffers/cache:' | sed -ne 's/  */ /gp' | cut -d' ' -f4)Mb"
+    NET="$(test -n "$(ip route show 0.0.0.0/0)" && echo 'A' || echo 'N')"
+  ;;
+  Darwin)
+    LOADAVG="$(sysctl -n vm.loadavg | sed -En 's/{ ([0-9\.]+).*/\1/p')"
+    MEMORY="$(( $(sysctl -n vm.page_free_count hw.pagesize | paste -sd'*' - ) / 1024 / 1024 ))Mb"
+    NET="$(netstat -nrf inet | grep -q default && echo 'A' || echo 'N')"
+    BATTERY="$(pmset -g batt | sed -En 's/.*	([0-9]+%).*/\1/p')"
+  ;;
+esac
+DATE="$(date '+%a %b %d %R')"
+
+if [ "$1" ]; then
+  echo "$1"
+else
+  echo "$BATTERY | $NET | $LOADAVG | $MEMORY | $DATE"
+fi
+unset BATTERY NET LOADAVG MEMORY DATE

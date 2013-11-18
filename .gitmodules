@@ -1,0 +1,57 @@
+[submodule ".vim/bundle/tabular"]
+	path = .vim/bundle/tabular
+	url = https://github.com/godlygeek/tabular.git
+[submodule ".vim/bundle/clang_complete"]
+	path = .vim/bundle/clang_complete
+	url = https://github.com/Rip-Rip/clang_complete.git
+[submodule ".vim/bundle/extradite"]
+	path = .vim/bundle/extradite
+	url = https://github.com/int3/vim-extradite.git
+[submodule ".vim/bundle/fugitive"]
+	path = .vim/bundle/fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule ".vim/bundle/mw-utils"]
+	path = .vim/bundle/mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule ".vim/bundle/nerdtree"]
+	path = .vim/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule ".vim/bundle/perl"]
+	path = .vim/bundle/perl
+	url = https://github.com/petdance/vim-perl.git
+[submodule ".vim/bundle/repeat"]
+	path = .vim/bundle/repeat
+	url = https://github.com/tpope/vim-repeat.git
+[submodule ".vim/bundle/snipmate"]
+	path = .vim/bundle/snipmate
+	url = https://github.com/twinshadow/snipmate.vim.git
+[submodule ".vim/bundle/supertab"]
+	path = .vim/bundle/supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule ".vim/bundle/surround"]
+	path = .vim/bundle/surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule ".vim/bundle/taglist"]
+	path = .vim/bundle/taglist
+	url = https://github.com/vim-scripts/taglist.vim.git
+[submodule ".vim/bundle/tasklist"]
+	path = .vim/bundle/tasklist
+	url = https://github.com/superjudge/tasklist-pathogen.git
+[submodule ".vim/bundle/tlib"]
+	path = .vim/bundle/tlib
+	url = https://github.com/tomtom/tlib_vim.git
+[submodule ".vim/bundle/splice"]
+	path = .vim/bundle/splice
+	url = https://github.com/sjl/splice.vim.git
+[submodule ".vim/bundle/syntastic"]
+	path = .vim/bundle/syntastic
+	url = https://github.com/scrooloose/syntastic.git
+[submodule ".vim/bundle/tslime"]
+	path = .vim/bundle/tslime
+	url = https://github.com/jgdavey/tslime.vim.git
+[submodule ".vim/bundle/gnupg"]
+	path = .vim/bundle/gnupg
+	url = https://github.com/jamessan/vim-gnupg.git
+[submodule ".vim/bundle/sparkup"]
+	path = .vim/bundle/sparkup
+	url = https://github.com/rstacruz/sparkup.git
